@@ -11,8 +11,8 @@ function doLogin()
 	firstName = "";
 	lastName = "";
 
-	var login = document.getElementById("loginName").value;
-	var password = document.getElementById("loginPassword").value;
+	var login = document.getElementById("Login").value;
+	var password = document.getElementById("Password").value;
 //	var hash = md5( password );
 
 	document.getElementById("loginResult").innerHTML = "";
@@ -20,7 +20,7 @@ function doLogin()
 //	var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
 	var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
 	var url = urlBase + '/Login.' + extension;
-
+        alert("Hello there");
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, false);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -109,29 +109,30 @@ function addUser()
 	var login = document.getElementById("login").value;
 	var password = document.getElementById("password").value;
 
-	if (firstName == "")
+	if (firstName === "")
 	{
 		document.getElementById("errorMessage").innerHTML = "First name required!";
 		return;
 	}
-	if (lastName == "")
+	if (lastName === "")
 	{
 		document.getElementById("errorMessage").innerHTML = "Last name required!";
 		return;
 	}
-	if (login == "")
+	if (login === "")
 	{
 		document.getElementById("errorMessage").innerHTML = "Login username required!";
 		return;
 	}
-	if (password == "")
+	if (password === "")
 	{
 		document.getElementById("errorMessage").innerHTML = "Password required!";
 		return;
 	}
+	
+// 	var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
 
-	var jsonPayload = '{"firstName" : ' + firstName + ', "lastName" : ' + lastName + ',
-	"login" : ' + login + ', "password" : ' + password + '}';
+	var jsonPayload = '{"firstName" : "' + firstName + '", "lastName" : "' +lastName + '", "login" : "' + login + '", "password" : "' + password + '"}';
 
 	var url = urlBase + '/CreateUser.' + extension;
 
@@ -163,21 +164,19 @@ function addContact()
 	var currDate = document.getElementById("currDate").value;
 	var propertyType = document.getElementById("propertyType").value;
 
-	if (firstName == "")
+	if (firstName === "")
 	{
 		document.getElementById("errorMessage").innerHTML = "First name required!";
 		return;
 	}
-	if (lastName == "")
+	if (lastName === "")
 	{
 		document.getElementById("errorMessage").innerHTML = "Last name required!";
 		return;
 	}
 
-	var jsonPayload = '{ "firstName" : ' + firstName + ', "lastName" : ' + lastName + ',
-	"email" : ' + email + ', "phone" : ' + phone + ', "currDate" : ' + currDate + ',
-	"propertyType" : ' + propertyType + '}';
-
+	var jsonPayload = '{ "firstName" : "' + firstName + '", "lastName" : "' + lastName + '", "email" : "' + email + '", "phone" : "' + phone + '", "currDate" : "' + currDate + '", "propertyType" : "' + propertyType + '"}';
+// 	var url = urlBase + '/Login.' + extension;
 	var url = urlBase + '/CreateContact.' + extension;
 
 	var xhr = new XMLHttpRequest();
@@ -248,26 +247,26 @@ function searchContact()
 
 }
 
-function deleteUser(contactId)
-{
-	var jsonPayload = '{"userId" : "'+ userId +'"}';
-	var url = urlBase + '/DeleteUser.' + extension;
+// function deleteUser(contactId)
+// {
+// 	var jsonPayload = '{"userId" : "'+ userId +'"}';
+// 	var url = urlBase + '/DeleteUser.' + extension;
 
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, false);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+// 	var xhr = new XMLHttpRequest();
+// 	xhr.open("POST", url, false);
+// 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-	try
-	{
-		var delete = confirm("Are you sure you wish to delete user?");
-		if (!delete)
-			return;
-		xhr.send(jsonPayload);
-		document.getElementById("errorMessage").innerHTML = "";
+// 	try
+// 	{
+// 		var delete = confirm("Are you sure you wish to delete user?");
+// 		if (!delete)
+// 			return;
+// 		xhr.send(jsonPayload);
+// 		document.getElementById("errorMessage").innerHTML = "";
 
-	}
-	catch(err)
-	{
-		document.getElementById("errorMessage").innerHTML = "";
-	}
-}
+// 	}
+// 	catch(err)
+// 	{
+// 		document.getElementById("errorMessage").innerHTML = "";
+// 	}
+// }
