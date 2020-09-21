@@ -1,4 +1,4 @@
-var urlBase = 'http://dystopiarealty.com';
+var urlBase = 'http://dystopiarealty.com/LAMPAPI';
 var extension = 'php';
 
 var userId = 0;
@@ -10,7 +10,6 @@ function doLogin()
 	userId = 0;
 	firstName = "";
 	lastName = "";
-
 	var login = document.getElementById("Login").value;
 	var password = document.getElementById("Password").value;
 //	var hash = md5( password );
@@ -20,7 +19,6 @@ function doLogin()
 //	var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
 	var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
 	var url = urlBase + '/Login.' + extension;
-        alert("Hello there");
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, false);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -43,11 +41,11 @@ function doLogin()
 
 		saveCookie();
 
-		window.location.href = "register.html";
+		window.location.href = "http://dystopiarealty.com/dashboard.html";
 	}
 	catch(err)
 	{
-		document.getElementById("loginResult").innerHTML = err.message;
+		document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 	}
 
 }
@@ -99,40 +97,19 @@ function doLogout()
 	firstName = "";
 	lastName = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-	window.location.href = "login.html"; // ---
+	window.location.href = "index.html";
 }
 
 function addUser()
 {
 	var firstName = document.getElementById("firstName").value;
 	var lastName = document.getElementById("lastName").value;
+	var email = document.getElementById("email").value;
+	var phone = document.getElementById("phone").value;
 	var login = document.getElementById("login").value;
 	var password = document.getElementById("password").value;
 
-	if (firstName === "")
-	{
-		document.getElementById("errorMessage").innerHTML = "First name required!";
-		return;
-	}
-	if (lastName === "")
-	{
-		document.getElementById("errorMessage").innerHTML = "Last name required!";
-		return;
-	}
-	if (login === "")
-	{
-		document.getElementById("errorMessage").innerHTML = "Login username required!";
-		return;
-	}
-	if (password === "")
-	{
-		document.getElementById("errorMessage").innerHTML = "Password required!";
-		return;
-	}
-	
-// 	var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-
-	var jsonPayload = '{"firstName" : "' + firstName + '", "lastName" : "' +lastName + '", "login" : "' + login + '", "password" : "' + password + '"}';
+	var jsonPayload = '{"firstName" : "' + firstName + '", "lastName" : "' +lastName + '","email" : "' +email + '", "phone" : "' +phone + '","login" : "' + login + '", "password" : "' + password + '"}';
 
 	var url = urlBase + '/CreateUser.' + extension;
 
@@ -144,9 +121,8 @@ function addUser()
 	{
 		xhr.send(jsonPayload);
 		var jsonObject = JSON.parse( xhr.responseText);
-
-		document.getElementById("errorMessage").innerHTML = ""; // ---
-		document.getElementById("finishMessage").innerHTML = "Added!"; // ---
+		alert("User has been added!"); // ---
+		window.location.href = "index.html";
 	}
 	catch(err)
 	{
@@ -164,16 +140,6 @@ function addContact()
 	var currDate = document.getElementById("currDate").value;
 	var propertyType = document.getElementById("propertyType").value;
 
-	if (firstName === "")
-	{
-		document.getElementById("errorMessage").innerHTML = "First name required!";
-		return;
-	}
-	if (lastName === "")
-	{
-		document.getElementById("errorMessage").innerHTML = "Last name required!";
-		return;
-	}
 
 	var jsonPayload = '{ "firstName" : "' + firstName + '", "lastName" : "' + lastName + '", "email" : "' + email + '", "phone" : "' + phone + '", "currDate" : "' + currDate + '", "propertyType" : "' + propertyType + '"}';
 // 	var url = urlBase + '/Login.' + extension;
@@ -187,11 +153,8 @@ function addContact()
 	{
 		xhr.send(jsonPayload);
 		var jsonObject = JSON.parse( xhr.responseText);
-
-		document.getElementById("errorMessage").innerHTML = ""; // ---
-		document.getElementById("finishMessage").innerHTML = "Added!"; // ---
-
 		searchContact();
+		alert("User has been added!"); // ---
 	}
 	catch(err)
 	{
