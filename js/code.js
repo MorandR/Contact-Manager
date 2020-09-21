@@ -41,7 +41,7 @@ function doLogin()
 
 		saveCookie();
 
-		window.location.href = "http://dystopiarealty.com/dashboard.html";
+		window.location.href = 'http://dystopiarealty.com/dashboard.html';
 	}
 	catch(err)
 	{
@@ -166,7 +166,6 @@ function addContact()
 function searchContact()
 {
 	var srch = document.getElementById("searchText").value; // ---
-	document.getElementById("colorSearchResult").innerHTML = ""; // ---
 
 	var jsonPayload = '{"search" : "' + srch + '","userId" : ' + userId + '}'; // ---
 	var url = urlBase + '/searchContact.' + extension; // ---
@@ -210,26 +209,66 @@ function searchContact()
 
 }
 
-// function deleteUser(contactId)
-// {
-// 	var jsonPayload = '{"userId" : "'+ userId +'"}';
-// 	var url = urlBase + '/DeleteUser.' + extension;
+function deleteContact(contactId)
+{
+    var jsonPayload = '{"ID" : "' + contactId + '", "userId" : "' + userId + '"}';
+	var url = urlBase + '/DeleteContact.' + extension;
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, false);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		var deleteChoice = confirm("Are you sure?")
 
-// 	var xhr = new XMLHttpRequest();
-// 	xhr.open("POST", url, false);
-// 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+		if (!deleteChoice)
+			return;
 
-// 	try
-// 	{
-// 		var delete = confirm("Are you sure you wish to delete user?");
-// 		if (!delete)
-// 			return;
-// 		xhr.send(jsonPayload);
-// 		document.getElementById("errorMessage").innerHTML = "";
+		xhr.send(jsonPayload);
+		alert("Contact Deleted!");
+		
+// 		searchContact();
+	}
+	catch(err)
+	{
+	    alert("Error in deleting contact.");
+	}
+}
 
-// 	}
-// 	catch(err)
-// 	{
-// 		document.getElementById("errorMessage").innerHTML = "";
-// 	}
-// }
+function updateContact(firstName, lastName, email, phone, currDate,propertyType)
+{
+    document.getElementById("firstName") = firstName;
+    document.getElementById("lastName") = lastName;
+    document.getElementById("email") = email;
+    document.getElementById("phone") = phone;
+    document.getElementById("currDate") = currDate;
+    document.getElementById("propertyType") = propertyType;
+}
+
+function updateUser(userId, login, password)
+{
+    document.getElementById("login") = login;
+    document.getElementById("login") = password;
+}
+
+function deleteUser(userId)
+{
+	var jsonPayload = '{"userId" : "'+ userId +'"}';
+	var url = urlBase + '/DeleteUser.' + extension;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, false);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try
+	{
+		var delete = confirm("Are you sure you wish to delete user?");
+		if (!delete)
+			return;
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		alert("Failed to delete User.")
+	}
+}
