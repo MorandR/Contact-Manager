@@ -18,17 +18,17 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 
 
-    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <link href="css/plugins/timeline.css" rel="stylesheet">
-
-
     <link href="css/dashboard.css" rel="stylesheet">
 
 
     <link href="css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-   
+    <script>
+    function add(){
+        document.getElementById('contact-details').style.display="none";
+        document.getElementById('newcontact').style.display="block";
+    } //end add
+    </script>
 
 </head>
 
@@ -50,26 +50,26 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links " >
-        <li class="sidebar-search" style="width: 350px;margin-right: 25%;margin-top: 1%;">
+        <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                  <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
+                                <button class="btn btn-default" type="button" style="border-radius: 20px;">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                                <input type="text" class="form-control" placeholder="Search" style="text-align:left">
+                                <input type="text" class="form-control" placeholder="Search" style="text-align:left;border-radius: 20px;">
                                
                             </div>
                             <!-- /input-group -->
                         </li>
                             <li class="dropdown" style="    float: right;">
-                    <a class="dropdown-toggle"  href="#">
+                    <a class="dropdown-toggle"  href="#" style="border-radius: 20px;">
                       Remove Contact   <i class="fa fa-times fa-fw"></i>
                     </a>
              
                 </li>
                          <li class="dropdown" style="    float: right;">
-                    <a class="dropdown-toggle"  href="#">
+                    <a class="dropdown-toggle"  onclick="add()" style="border-radius: 20px; cursor: pointer;">
                       Add Contact   <i class="fa fa-plus fa-fw"></i>
                     </a>
              
@@ -113,19 +113,56 @@
 
         <!-- Page Content -->
         <div id="page-wrapper">
+          <div id="contact-details">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">John Doe</h1>
-                </div>
-                </div>
+            </div>
+                 </div>
                  <div class="row">
                      <div class="col-lg-12">
-                       <h3 > (352) 284-0127</h3>
+                       <h3 > (555)444-3333</h3>
                           <h3 > john_doe@yahoo.com</h3>
                          <h3 > Property Type</h3>
-                     </div></div>
+                     </div>
+                 </div>
+                     
                 
     
+             </div>
+             <!-- form for adding new contact-->
+             <div id="newcontact" style="display: none; padding: 20px;">
+                <form>
+                        <!-- first name -->
+                        <div class="form-group">
+                            <label for="addFirstName" class="label-text">First name</label>
+                            <input type="name" class="form-control" id="addFirstName" placeholder="John">
+                        </div>
+                        <!-- last name -->
+                        <div class="form-group">
+                            <label for="addLastName" class="label-text">Last name</label>
+                            <input type="name" class="form-control" id="addLastName" placeholder="Doe">
+                        </div>
+                        <!-- phone number -->
+                        <div class="form-group">
+                            <label for="addPhoneNumber" class="label-text">Phone number</label>
+                            <input type="number" class="form-control" id="addPhoneNumber" placeholder="(555) 333-4444">
+                        </div>
+                        <!-- email -->
+                        <div class="form-group">
+                            <label for="addEmail" class="label-text">Email</label>
+                            <input type="email" class="form-control" id="addEmail" placeholder="example@mail.com">
+                        </div>
+                        <!-- property type -->
+                        <div class="form-group">
+                            <label for="addPropertyType" class="label-text">Property Type</label>
+                            <input type="propertyType" class="form-control" id="addPropertyType" placeholder="Deluxe garbage can">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="border-radius:20px">Add</button>
+                        </form>
+             </div>
+           </div>
         </div>
         <!-- /#page-wrapper -->
 
