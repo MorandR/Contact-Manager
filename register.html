@@ -32,44 +32,47 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="register100-form validate-form">
-					<span class="login100-form-title p-b-43">
+				<!--<form class="register100-form validate-form">-->
+				<div style="background-color: white; border-radius: 20px; margin: 0 auto; width: 600px; padding: 20px;">
+					<span class="login100-form-title p-b-43" >
+					<div style="font-size: 25pt; text-align: center; padding-top: 20px;">
 						Register
+					</div>
 					</span>
 					
 					
 					<div class="wrap-input100 validate-input" data-validate = "First name is required">
-						<input class="input100" type="text" name="fname">
-						<span class="focus-input100"></span>
+						<input class="input100" id="firstName" type="text" name="fname">
+						<span class="focus-input100" id="errorMessage"></span>
 						<span class="label-input100">First Name</span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input" data-validate="Last name is required">
-						<input class="input100" type="text" name="lname">
+						<input class="input100" id="lastName" type="text" name="lname">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Last Name</span>
 					</div>
                     
                     		<div class="wrap-input100 validate-input" data-validate="Email is required">
-						<input class="input100" type="text" name="email">
+						<input class="input100" id="email" type="text" name="email">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Email</span>
 					</div>
 
                     		<div class="wrap-input100 validate-input" data-validate="Phone Number is required">
-						<input class="input100" type="text" name="phone">
+						<input class="input100" id="phone" type="text" name="phone">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Phone Number</span>
 					</div>
                     		<div class="wrap-input100 validate-input" data-validate="Username is required">
-						<input class="input100" type="text" name="user">
+						<input class="input100" id="login" type="text" name="user">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Username</span>
 					</div>
                     
                     		<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" name="pass">
+						<input class="input100" id="password" type="password" name="pass">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Password</span>
 					</div>
@@ -78,20 +81,26 @@
 						<span class="focus-input100"></span>
 						<span class="label-input100">Confirm Password</span>
 					</div>
-                    
 				
-			
-<div class="container-login100-form-btn">
-						<button class="login100-form-btn2">
-							Register
-						</button>
+                    
+					<div style="text-align: center; padding-bottom: 10px; padding-top: 15px;">
+						<a href="login.html" style="font-size: medium;">
+							already have an account? Log in
+						</a>
 					</div>
-					
-				</form>
+			
+					<div class="container-login100-form-btn">
+											<button class="login100-form-btn2" onclick="addUser()">
+												Register
+											</button>
+										</div>
+										
+									<!--</form>-->
 
-			</div>
-		</div>
-	</div>
+								</div>
+							</div>
+						</div>
+</div>
 	
 	
 
@@ -113,6 +122,7 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	<script type="text/javascript" src="js/code.js"></script>
 
 </body>
 </html>
