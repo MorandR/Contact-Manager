@@ -1,6 +1,6 @@
-$(function() {
-  $('#side-menu').metisMenu();
-});
+// $(function() {
+//   $('#side-menu').metisMenu();
+// });
 
 // Loads the correct sidebar on window load,
 // collapses the sidebar on window resize.
