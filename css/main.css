@@ -210,6 +210,7 @@ iframe {
   align-items: center;
   background: #f2f2f2;
       background-image:url('../images/backgroundimg.jpg');
+  background-size: cover;
 }
 
 
@@ -289,6 +290,28 @@ width: 560px;
   text-align: center;
 }
 
+.loginbtn
+{
+  background-color: rgba(20, 201, 221, 0.159) !important;
+  cursor: pointer ;
+  height: 50px !important;
+}
+.loginbtn:hover
+{
+  background-color: rgba(20, 201, 221, 0.378) !important;
+  color: rgba(255, 238, 0, 0.796)
+}
+
+.regbtn
+{
+  background-color: rgba(20, 201, 221, 0.159) !important;
+  cursor: pointer ;
+}
+.regbtn:hover
+{
+  background-color: rgba(20, 201, 221, 0.378) !important;
+  color: rgb(21, 255, 0)
+}
 
 
 /*------------------------------------------------------------------
@@ -336,7 +359,7 @@ width: 560px;
   background: transparent;
   font-family: Montserrat-Regular;
   font-size: 18px;
-  color: #555555;
+  color: #ffffff;
   line-height: 1.2;
   padding: 0 26px;
 }

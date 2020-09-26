@@ -12,18 +12,23 @@
     <title>Dashboard</title>
 
  
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
     
 
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
 
 
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="../css/dashboard.css" rel="stylesheet">
 
 
-    <link href="css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <script>
+    $(function() {
+        $("#search").autocomplete({
+        source: 'SearchContacts.php',
+            });
+        });
     function add(){
         document.getElementById('contact-details').style.display="none";
         document.getElementById('newcontact').style.display="block";
@@ -34,7 +39,7 @@
     } //end cancel
     </script>
 
-    <style>
+    <style>--
         .search {
         border-radius: 20px 0px 0px 20px !important;
         }
@@ -64,17 +69,17 @@
         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                  <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" style="border-radius: 0px 20px 20px 0px;">
+                                <button class="btn btn-default" type="button" style="border-radius: 0px 20px 20px 0px;" onclick = "searchContact()">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                                <input type="text" class="form-control search" placeholder="Search" style="text-align:left; border-radius: 0px 20px 20px 0px;">
+                                <input type="text" class="form-control search" id= "searchText" placeholder="Search" style="text-align:left; border-radius: 0px 20px 20px 0px;">
                                
                             </div>
                             <!-- /input-group -->
                         </li>
                             <li class="dropdown" style="    float: right;">
-                    <a class="dropdown-toggle"  href="#" style="border-radius: 20px;">
+                    <a class="dropdown-toggle" href="#" style="border-radius: 20px;">
                       Remove Contact   <i class="fa fa-times fa-fw"></i>
                     </a>
              
@@ -97,7 +102,7 @@
                                
                                 Contact name 1&nbsp;&nbsp;
                                 <!-- <span class="fa fa-user"></span> -->
-                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;"></img>
+                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;">
                             </a>
                         </li>
                         <li>
@@ -105,7 +110,7 @@
                                 Contact name 2
                                 &nbsp;&nbsp;
                                 <!-- <span class="fa fa-user"></span> -->
-                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;"></img>
+                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;">
                             </a>
                         </li>
                         <li>
@@ -113,7 +118,7 @@
                                 Contact name 3
                                 &nbsp;&nbsp;
                                 <!-- <span class="fa fa-user"></span> -->
-                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;"></img>
+                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;">
                             </a>
                         </li>
                         <li>
@@ -121,7 +126,7 @@
                                 Contact name 4
                                 &nbsp;&nbsp;
                                 <!-- <span class="fa fa-user"></span> -->
-                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;"></img>
+                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;">
                             </a>
                         </li>
                         <li>
@@ -129,7 +134,7 @@
                                 Contact name 5
                                 &nbsp;&nbsp;
                                 <!-- <span class="fa fa-user"></span> -->
-                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;"></img>
+                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;">
                             </a>
                         </li>
                         <li>
@@ -137,7 +142,7 @@
                                 Contact name 6
                                 &nbsp;&nbsp;
                                 <!-- <span class="fa fa-user"></span> -->
-                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;"></img>
+                                <img src="images/user.jpg" style="width: 30px; border-radius: 20px;">
                             </a>
                         </li>
                     </ul>
@@ -204,24 +209,25 @@
                             <input type="propertyType" class="form-control" id="addPropertyType" placeholder="Deluxe garbage can">
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="border-radius:20px">Add</button>
+                        <button type="submit" class="btn btn-primary" style="border-radius:20px" onclick="addContact()">Add</button>
 
              </div>
            </div>
+                <!-- /#page-wrapper -->
         </div>
-        <!-- /#page-wrapper -->
+   
 
-    </div>
     <!-- /#wrapper -->
 
 
-    <script src="js/jquery-1.11.0.js"></script>
+    <script src="../js/jquery-1.11.0.js"></script>
 
   
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 
 
-    <script src="js/dashboard.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/code.js"></script>
 
 </body>
 
