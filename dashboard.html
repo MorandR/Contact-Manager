@@ -3,6 +3,7 @@
 
 <head>
 
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,23 +13,26 @@
     <title>Dashboard</title>
 
  
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    
-
-    <link href="../css/bootstrap.css" rel="stylesheet">
-
-
-    <link href="../css/dashboard.css" rel="stylesheet">
+ 
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/dashboard.css" rel="stylesheet">
+    <link href="./css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 
-    <link href="../css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+ 
+ 
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+  
+  <!-- Bootstrap Css -->
+  
 
-    <script>
-    $(function() {
-        $("#search").autocomplete({
-        source: 'SearchContacts.php',
-            });
-        });
+  
+
+<script type="text/javascript">
+
     function add(){
         document.getElementById('contact-details').style.display="none";
         document.getElementById('newcontact').style.display="block";
@@ -37,23 +41,36 @@
         document.getElementById('contact-details').style.display="block";
         document.getElementById('newcontact').style.display="none";
     } //end cancel
+  
+ 
+  
     </script>
+    
+    
 
-    <style>--
+    <style>
         .search {
         border-radius: 20px 0px 0px 20px !important;
+        padding-bottom: 7px;
         }
+        
+        .ui-autocomplete {
+  z-index: 10000000;
+  text-align:left;
+}
+
+
     </style>
 
 
 </head>
 
-<body>
+<body onload = "readCookie(); displayName();">
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-static-top panel" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header" style="float:left">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -61,7 +78,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Dashboard</a>
+                <a class="navbar-brand" style="color: white" href="#">Dashboard</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -73,13 +90,16 @@
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
+                                
                                 <input type="text" class="form-control search" id= "searchText" placeholder="Search" style="text-align:left; border-radius: 0px 20px 20px 0px;">
+                                
+                                
+                                
                                
                             </div>
                             <!-- /input-group -->
-                        </li>
                             <li class="dropdown" style="    float: right;">
-                    <a class="dropdown-toggle" href="#" style="border-radius: 20px;">
+                    <a class="dropdown-toggle" href="#" style="border-radius: 20px;" onclick = "deleteContact()">
                       Remove Contact   <i class="fa fa-times fa-fw"></i>
                     </a>
              
@@ -98,7 +118,7 @@
                     <ul class="nav" id="side-menu" style="text-align:center">
                         <li>
                           
-                            <a href="#">  
+                            <a href="#" id = "contactName1">  
                                
                                 Contact name 1&nbsp;&nbsp;
                                 <!-- <span class="fa fa-user"></span> -->
@@ -153,18 +173,27 @@
         </nav>
 
         <!-- Page Content -->
-        <div id="page-wrapper">
-          <div id="contact-details">
+        <div id="page-wrapper" class="panel">
+          <div id="contact-details" class="panel">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">John Doe</h1>
-            </div>
+                <div class="col-lg-10 col-md-8 col-xs-8 col-sm-8">
+                    <h1 class="page-header" style="padding-top: 30px;float: left;" id="searchedName">Name</h1>
+                </div>
+                <div class="col-lg-2 col-md-4 col-xs-4 col-sm-4" style="margin-top: 20px; margin-bottom: 20px;">
+
+                   <img style="border-radius: 200px; max-width: 140px; " src="images/user.jpg">
+
+                </div>
+                
                  </div>
                  <div class="row">
-                     <div class="col-lg-12">
-                       <h3 > (555)444-3333</h3>
-                          <h3 > john_doe@yahoo.com</h3>
-                         <h3 > Property Type</h3>
+                     <div class="col-lg-12" style="text-align: left;">
+                       <h3 id="searchedPhone">Phone Number</h3>
+                          <h3 id="searchedEmail">Email</h3>
+                         <h3 id="searchedPropertyType">Property Type</h3>
+                         <h3 id="searchedCity">City</h3>
+                         <h3 id="searchedState">State</h3>
+                         <h3 id="searchedZip">Zip</h3>
                      </div>
                  </div>
                      
@@ -183,6 +212,7 @@
                         </div>
                     </div>
                  </div>
+                        <span id = "displayMessage" style="color:Salmon;"></span>
                         <!-- first name -->
                         <div class="form-group">
                             <label for="addFirstName" class="label-text">First name</label>
@@ -208,6 +238,21 @@
                             <label for="addPropertyType" class="label-text">Property Type</label>
                             <input type="propertyType" class="form-control" id="addPropertyType" placeholder="Deluxe garbage can">
                         </div>
+                        <!--City-->
+                        <div class="form-group">
+                            <label for="addCity" class="label-text">City</label>
+                            <input type="city" class="form-control" id="addCity" placeholder="Orlando">
+                        </div>
+                        <!--State-->
+                        <div class="form-group">
+                            <label for="addState" class="label-text">State</label>
+                            <input type="state" class="form-control" id="addState" placeholder="Florida">
+                        </div>
+                        <!--Zip-->
+                        <div class="form-group">
+                            <label for="addZip" class="label-text">Zip</label>
+                            <input type="zip" class="form-control" id="addZip" placeholder="32816">
+                        </div>
 
                         <button type="submit" class="btn btn-primary" style="border-radius:20px" onclick="addContact()">Add</button>
 
@@ -219,15 +264,24 @@
 
     <!-- /#wrapper -->
 
-
-    <script src="../js/jquery-1.11.0.js"></script>
+    <script src="./js/jquery-1.11.0.js"></script>
 
   
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
 
 
-    <script src="../js/dashboard.js"></script>
-    <script src="../js/code.js"></script>
+    <script src="./js/dashboard.js"></script>
+    <script src="./js/code.js"></script>
+
+
+ 
+ <script type="text/javascript">
+  $(function() {
+     $( "#searchText" ).autocomplete({
+       source: 'test.php',
+     });
+  });
+</script>
 
 </body>
 
