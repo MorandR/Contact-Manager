@@ -2,19 +2,36 @@ var urlBase = 'http://dystopiarealty.com/LAMPAPI';
 var extension = 'php';
 
 var userId = 0;
+var contactId = 0;
 var firstName = "";
 var lastName = "";
+var email = "";
+var phone = "";
+var login = "";
+var password = "";
+var propertyType = "";
+
+function displayName()
+{
+    document.getElementById("searchedName").innerHTML = "Welcome " + firstName + " to DystopiaRealty";
+    document.getElementById("searchedPhone").innerHTML = "This dashboard allows you to ADD, SEARCH, UPDATE and";
+    document.getElementById("searchedEmail").innerHTML = ".DELETE your Realtor Contact list";
+    document.getElementById("searchedPropertyType").innerHTML = "";
+    document.getElementById("searchedCity").innerHTML = "";
+	document.getElementById("searchedState").innerHTML = "";
+	document.getElementById("searchedZip").innerHTML = "";
+}
 
 function doLogin()
 {
 	userId = 0;
 	firstName = "";
 	lastName = "";
-	var login = document.getElementById("Login").value;
-	var password = document.getElementById("Password").value;
+	login = document.getElementById("Login").value;
+	password = document.getElementById("Password").value;
 //	var hash = md5( password );
 
-	document.getElementById("loginResult").innerHTML = "";
+
 
 //	var jsonPayload = '{"login" : "' + login + '", "password" : "' + hash + '"}';
 	var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
@@ -24,15 +41,16 @@ function doLogin()
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
+	    // Sends payload with user info to API
 		xhr.send(jsonPayload);
-
+        // Turns info from API into java object.
 		var jsonObject = JSON.parse( xhr.responseText );
 
 		userId = jsonObject.id;
-
+        // If user doesn't exist then java object returns undefined.
 		if( userId < 1 )
 		{
-			document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+			document.getElementById("userNameError").innerHTML = "UserName/Password does not exist.";
 			return;
 		}
 
@@ -40,12 +58,11 @@ function doLogin()
 		lastName = jsonObject.lastName;
 
 		saveCookie();
-
 		window.location.href = 'http://dystopiarealty.com/dashboard.html';
 	}
 	catch(err)
 	{
-		document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+		document.getElementById("userNameError").innerHTML = "UserName/Password does not exist.";
 	}
 
 }
@@ -58,7 +75,7 @@ function saveCookie()
 	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
 }
 
-function readCookie()
+function readCookie() 
 {
 	userId = -1;
 	var data = document.cookie;
@@ -85,29 +102,50 @@ function readCookie()
 	{
 		window.location.href = "index.html";
 	}
-	else
-	{
-		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
-	}
 }
 
-function doLogout()
+function doLogout() // needs a button on dashboard or not?
 {
 	userId = 0;
 	firstName = "";
 	lastName = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-	window.location.href = "index.html";
+	window.location.href = 'http://dystopiarealty.com/index.html';
 }
 
-function addUser()
+function addUser() 
 {
-	var firstName = document.getElementById("firstName").value;
-	var lastName = document.getElementById("lastName").value;
-	var email = document.getElementById("email").value;
-	var phone = document.getElementById("phone").value;
-	var login = document.getElementById("login").value;
-	var password = document.getElementById("password").value;
+	firstName = document.getElementById("firstName").value;
+	lastName = document.getElementById("lastName").value;
+	email = document.getElementById("email").value;
+	phone = document.getElementById("phone").value;
+	login = document.getElementById("login").value;
+	password = document.getElementById("password").value;
+	
+	if (firstName === "")
+	{
+	    // Doesn't print error messages
+	    // Html should print error messages but doesn't anymore.
+	    document.getElementById("errorMessage").innerHTML = "First name required!";
+	    return;
+	}
+	if (lastName === "")
+	{
+	    // Doesn't print error messages
+	    // Html should print error messages but doesn't anymore.
+	    document.getElementById("errorMessage").innerHTML = "Last name required!";
+	    return;
+	}
+	if (login === "")
+	{
+	    document.getElementById("errorMessage").innerHTML = "Login required!";
+	    return;
+	}
+	if (password === "")
+	{
+	    document.getElementById("errorMessage").innerHTML = "Password required!";
+	    return;
+	}
 
 	var jsonPayload = '{"firstName" : "' + firstName + '", "lastName" : "' +lastName + '","email" : "' +email + '", "phone" : "' +phone + '","login" : "' + login + '", "password" : "' + password + '"}';
 
@@ -116,59 +154,73 @@ function addUser()
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, false);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
 	try
 	{
 		xhr.send(jsonPayload);
-		var jsonObject = JSON.parse( xhr.responseText);
-		alert("User has been added!"); // ---
-		window.location.href = "index.html";
+		var jsonObject2 = JSON.parse( xhr.responseText );
+	    document.getElementById("errorMessage").innerHTML = "Error in adding User.";
+	   
 	}
 	catch(err)
 	{
-		document.getElementById("errorMessage").innerHTML = ""; // ---
+		window.location.href = 'http://dystopiarealty.com/index.html';
+		document.getElementById("userNameError").innerHTML = "User created!";
 	}
 
 }
 
 function addContact()
 {
-	var firstName = document.getElementById("firstName").value;
-	var lastName = document.getElementById("lastName").value;
-	var email = document.getElementById("email").value;
-	var phone = document.getElementById("phone").value;
-	var currDate = document.getElementById("currDate").value;
-	var propertyType = document.getElementById("propertyType").value;
+    readCookie();
+	var firstName = document.getElementById("addFirstName").value;
+	var lastName = document.getElementById("addLastName").value;
+	var phone = document.getElementById("addPhoneNumber").value;
+	var email = document.getElementById("addEmail").value;
+	var propertyType = document.getElementById("addPropertyType").value;
+	var city = document.getElementById("addCity").value;
+	var state = document.getElementById("addState").value;
+	var zip = document.getElementById("addZip").value;
 
 
-	var jsonPayload = '{ "firstName" : "' + firstName + '", "lastName" : "' + lastName + '", "email" : "' + email + '", "phone" : "' + phone + '", "currDate" : "' + currDate + '", "propertyType" : "' + propertyType + '"}';
-// 	var url = urlBase + '/Login.' + extension;
+	var jsonPayload = '{ "firstName" : "' + firstName + '", "lastName" : "' + lastName + '", "email" : "' + email + '", "phone" : "' + phone + '","propertyType" : "' + propertyType + '", "userID" : "' + userId + '", "zip" : "' + zip + '", "state" : "' + state + '", "city" : "' + city + '"}';
+
 	var url = urlBase + '/CreateContact.' + extension;
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, false);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
 	try
 	{
 		xhr.send(jsonPayload);
-		var jsonObject = JSON.parse( xhr.responseText);
-		searchContact();
-		alert("User has been added!"); // ---
+		// If jsonObject3 is undefined that means contact doesn't exist in database. 
+		var jsonObject3 = JSON.parse( xhr.responseText );
+		document.getElementById("displayMessage").innerHTML = "Error in adding contact.";
 	}
 	catch(err)
 	{
-		document.getElementById("errorMessage").innerHTML = ""; // ---
+	   // document.getElementById("contactName1").innerHTML = firstName + " " + lastName + "&nbsp;&nbsp;";
+		document.getElementById("displayMessage").innerHTML = "Contact added";
 	}
 
 }
 
-function searchContact()
+function searchContact() // Need to alert user
 {
-	var srch = document.getElementById("searchText").value; // ---
+    readCookie();
+	var search = document.getElementById("searchText").value; // ---
+	var searchedUserId = 0;
+	var searchlastName = "";
+	var searchfirstName = "Person Doesn't exist";
+	var searchPhone = "";
+	var searchEmail = "";
+	var searchPropertyType = "";
+	var searchCity = "";
+	var searchState = "";
+	var searchZip = "";
 
-	var jsonPayload = '{"search" : "' + srch + '","userId" : ' + userId + '}'; // ---
-	var url = urlBase + '/searchContact.' + extension; // ---
+	var jsonPayload = '{"search" : "' + search + '", "userID" : "' + userId + '"}';
+	
+	var url = urlBase + '/Sandbox.' + extension;
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -179,39 +231,47 @@ function searchContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				var jsonObject = JSON.parse( xhr.responseText );
+			 //   alert("Contact(s) has been retrieved.");
+				var jsonObject4 = JSON.parse( xhr.responseText );
 
-				if (jsonObject.results.length == 1)
-					document.getElementById("searchResult").innerHTML = "1 contact found";
-				else if (jsonObject.results.length > 1)
-					document.getElementById("searchResult").innerHTML = jsonObject.results.length + "Contacts found";
-				else
-					document.getElementById("searchResult").innerHTML = "No contacts found";
-
-				for( var i=0; i<jsonObject.results.length; i++ )
+				for( var i=0; i<jsonObject4.results.length; i++ )
 				{
-					colorList += jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
-					{
-						colorList += "<br />\r\n";
-					}
+				    searchedUserId = jsonObject4.results[i].UserId.toString();
+				    if (searchedUserId == userId)
+				    {
+    				    searchfirstName = jsonObject4.results[i].FirstName.toString();
+    				    searchlastName = jsonObject4.results[i].LastName.toString();
+    				    searchPhone = jsonObject4.results[i].PhoneNumber.toString();
+    				    searchEmail = jsonObject4.results[i].Email.toString();
+    				    searchPropertyType = jsonObject4.results[i].propertyType.toString();
+    				    searchedCity = jsonObject4.results[i].City.toString();
+    				    searchState = jsonObject4.results[i].State.toString();
+    				    searchZip = jsonObject4.results[i].Zip.toString();
+    				    contactId = jsonObject4.results[i].ID.toString();				        
+				    }
 				}
-
-				document.getElementsByTagName("p")[0].innerHTML = colorList;
+				document.getElementById("searchedName").innerHTML = searchfirstName + " " + searchlastName;
+				document.getElementById("searchedPhone").innerHTML = searchPhone;
+				document.getElementById("searchedEmail").innerHTML = searchEmail;
+				document.getElementById("searchedPropertyType").innerHTML = searchPropertyType;
+				document.getElementById("searchedCity").innerHTML = searchedCity;
+				document.getElementById("searchedState").innerHTML = searchState;
+				document.getElementById("searchedZip").innerHTML = searchZip;
 			}
 		};
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("colorSearchResult").innerHTML = err.message; //---
+        alert("Failed to search.");
 	}
 
 }
 
-function deleteContact(contactId)
+function deleteContact() // need to link button and edit
 {
-    var jsonPayload = '{"ID" : "' + contactId + '", "userId" : "' + userId + '"}';
+    readCookie();
+    var jsonPayload = '{"userId" : "' + userId + '", "contactId" : "' + contactId + '"}';
 	var url = urlBase + '/DeleteContact.' + extension;
 	
 	var xhr = new XMLHttpRequest();
@@ -219,15 +279,20 @@ function deleteContact(contactId)
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
-		var deleteChoice = confirm("Are you sure?")
+		var deleteChoice = confirm("Are you sure you wish to delete currently displayed contact?")
 
 		if (!deleteChoice)
 			return;
 
 		xhr.send(jsonPayload);
 		alert("Contact Deleted!");
-		
-// 		searchContact();
+		document.getElementById("searchedName").innerHTML = "Name";
+		document.getElementById("searchedPhone").innerHTML = "Phone Number";
+		document.getElementById("searchedEmail").innerHTML = "Email";
+		document.getElementById("searchedPropertyType").innerHTML = "Property Type";
+		document.getElementById("searchedCity").innerHTML = "City";
+		document.getElementById("searchedState").innerHTML = "State";
+		document.getElementById("searchedZip").innerHTML = "Zip";
 	}
 	catch(err)
 	{
@@ -235,6 +300,7 @@ function deleteContact(contactId)
 	}
 }
 
+// requires button on dashboard
 function updateContact(firstName, lastName, email, phone, currDate,propertyType)
 {
     document.getElementById("firstName") = firstName;
@@ -245,30 +311,9 @@ function updateContact(firstName, lastName, email, phone, currDate,propertyType)
     document.getElementById("propertyType") = propertyType;
 }
 
+// Do we need to update user?
 function updateUser(userId, login, password)
 {
     document.getElementById("login") = login;
     document.getElementById("login") = password;
-}
-
-function deleteUser(userId)
-{
-	var jsonPayload = '{"userId" : "'+ userId +'"}';
-	var url = urlBase + '/DeleteUser.' + extension;
-
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, false);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-	try
-	{
-		var delete = confirm("Are you sure you wish to delete user?");
-		if (!delete)
-			return;
-		xhr.send(jsonPayload);
-	}
-	catch(err)
-	{
-		alert("Failed to delete User.")
-	}
 }
